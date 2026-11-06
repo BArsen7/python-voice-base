@@ -1,0 +1,46 @@
+pipeline:
+  sample_rate: 16000
+  device: "cpu"  # cpu / cuda (для ONNX-совместимости позже меняется на "cpu")
+
+vad:
+  model: "silero_vad"  # silero_vad / energy_vad
+  threshold: 0.5
+  min_speech_duration_ms: 250
+  min_silence_duration_ms: 100
+  speech_pad_ms: 30
+  window_size_samples: 512  # 32 ms при 16 kHz
+
+overlap:
+  enabled: true
+  model: "energy_heuristic"  # pyannote_segmentation / energy_heuristic
+  threshold: 0.5
+  min_overlap_duration_ms: 100
+
+embeddings:
+  model: "wespeaker_resnet34"  # wespeaker_resnet34 / ecapa_tdnn
+  embedding_dim: 256
+  window_sec: 1.5  # окно для извлечения эмбеддинга из VAD-сегмента
+  hop_sec: 0.75
+
+clustering:
+  algorithm: "agglomerative"  # agglomerative / spectral
+  threshold: 0.75  # порог косинусного расстояния (1 - cosine_similarity)
+  max_speakers: 10
+  linkage: "average"
+  n_jobs: -1
+
+asr:
+  model: "faster_whisper_small"  # sherpa_onnx_zipformer / faster_whisper_small
+  language: "ru"
+  word_timestamps: true
+  beam_size: 5
+  vad_filter: false  # VAD уже выполнен отдельно
+
+alignment:
+  overlap_ratio_threshold: 0.5  # слово должно пересекаться с сегментом минимум на 50 %
+  merge_same_speaker_gap_ms: 200  # склейка соседних реплик одного спикера
+  min_segment_duration_ms: 100
+
+output:
+  format: "json"
+  ensure_monotonic: true  # гарантировать неубывание start_ms / end_ms

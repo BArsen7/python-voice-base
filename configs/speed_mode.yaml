@@ -1,0 +1,32 @@
+# configs/speed_mode.yaml
+mode: speed
+
+asr:
+  type: SherpaOnnxZipformerSmallASR
+  model_dir: models/sherpa-onnx-streaming-zipformer-small-ru-vosk-2025-08-16
+  num_threads: 2
+  provider: cpu
+  decoding_method: greedy_search
+
+vad:
+  type: StreamingEnergyVAD
+  speech_threshold: 0.015
+  min_silence_duration_ms: 200
+  max_silence_duration_ms: 500
+  max_segment_duration_ms: 8000     # ← НОВОЕ: не склеивать >8s (микс спикеров)
+
+clustering:
+  type: OnlineThresholdClustering
+  similarity_threshold: 0.65
+  max_speakers: 3
+  min_new_speaker_duration_ms: 2000 # ← НОВОЕ: короткие <2s не создают спикера
+
+embeddings:                          # ← НОВЫЙ блок
+  type: SherpaOnnxEmbedder
+  model_path: models/3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx
+  num_threads: 1
+
+pipeline:
+  sample_rate: 16000
+  chunk_ms: 100
+  emit_partial: false

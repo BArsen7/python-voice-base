@@ -1,0 +1,38 @@
+# ============================================================================
+# Quality Mode — overlap-aware диаризация (pyannote/segmentation-3.0)
+# ============================================================================
+pipeline:
+  sample_rate: 16000
+  exclude_overlap_from_clustering: true   # ключевая фича Quality Mode
+
+vad:
+  model: "pyannote_segmentation_3"
+  hf_token: "${HF_TOKEN}"                 # подставится из env, либо впиши вручную
+  onset: 0.5
+  offset: 0.5
+  min_speech_duration_ms: 500
+  min_silence_duration_ms: 100
+
+overlap:
+  enabled: true
+  model: "energy_heuristic"               # VAD уже даёт overlap, эвристика — fallback
+
+embeddings:
+  model: "wespeaker_resnet34"
+
+clustering:
+  algorithm: "agglomerative"
+  n_clusters_mode: "oracle"               # fixed / oracle / auto_silhouette
+  fixed_n_clusters: 4
+  max_k: 6
+  # ref_n_speakers подставляется benchmark-скриптом из RTTM для oracle-режима
+
+asr:
+  model: "faster_whisper_small"
+
+alignment:
+  overlap_ratio_threshold: 0.3
+  min_secondary_score: 0.6
+  merge_same_speaker_gap_ms: 500
+  min_segment_duration_ms: 100
+  ensure_monotonic: true

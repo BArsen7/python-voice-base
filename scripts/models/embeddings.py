@@ -324,3 +324,105 @@ def extract_windowed_embeddings(extractor, waveform, sample_rate,
                 emb,
             ))
     return out
+
+
+# === SPEED_MODE_EMBEDDER ===
+# Appended by install_embedder.sh. Lightweight ONNX speaker embedder for
+# Speed Mode — uses sherpa-onnx SpeakerEmbeddingExtractor (no torch, ~28 MB).
+import sherpa_onnx as _sm_sherpa  # noqa: E402
+
+_SM_EMB_SR = 16000
+
+
+class SherpaOnnxEmbedder(BaseEmbeddingExtractor):
+    """Speed-mode speaker embedder: sherpa-onnx Campplus (~28 MB, ~5 ms/segment).
+
+    Loads in ~200 ms, uses ONNX Runtime only. Replaces WeSpeakerEmbeddingExtractor
+    (which pulls torch/pyannote) for low-latency scenarios.
+    """
+
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__(config)
+        self.model_path = config.get(
+            "model_path",
+            "models/3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx",
+        )
+        self.num_threads = int(config.get("num_threads", 1))
+        self.provider = config.get("provider", "cpu")
+        self._extractor = None
+
+    def _lazy_load(self):
+        if self._extractor is not None:
+            return
+        # sherpa-onnx >= 1.10 API: pass a config object, not kwargs.
+        config = _sm_sherpa.SpeakerEmbeddingExtractorConfig(
+            model=self.model_path,
+            num_threads=self.num_threads,
+            debug=False,
+            provider=self.config.get("provider", "cpu"),
+        )
+        self._extractor = _sm_sherpa.SpeakerEmbeddingExtractor(config)
+        logger.info("SherpaOnnxEmbedder loaded: %s", self.model_path)
+
+    def extract(
+        self,
+        waveform: np.ndarray,
+        sample_rate: int,
+        segments: Sequence[SpeechSegment],
+    ) -> Tuple[np.ndarray, List[SpeechSegment]]:
+        self._lazy_load()
+        if sample_rate != _SM_EMB_SR:
+            raise ValueError(f"SherpaOnnxEmbedder expects {_SM_EMB_SR} Hz, got {sample_rate}")
+
+        embs: List[np.ndarray] = []
+        valid: List[SpeechSegment] = []
+
+        # Two calling conventions:
+        #   (a) streaming: orchestrator passes per-segment audio (waveform is
+        #       exactly one segment). We must NOT slice by absolute ms.
+        #   (b) offline: caller passes the whole recording + segments with
+        #       absolute timestamps; then we slice per segment.
+        #
+        # Heuristic: if the waveform length matches the segment duration
+        # (within 100 ms) for every segment, treat it as per-segment.
+        def _is_per_segment_waveform(wf: np.ndarray, segs) -> bool:
+            if not segs:
+                return True
+            wf_s = len(wf) / _SM_EMB_SR
+            for s in segs:
+                dur_s = (s.end_ms - s.start_ms) / 1000.0
+                if abs(wf_s - dur_s) > 0.1:
+                    return False
+            return True
+
+        per_segment = _is_per_segment_waveform(waveform, segments)
+
+        for seg in segments:
+            audio = getattr(seg, "audio", None)
+            if audio is None:
+                if per_segment and len(segments) == 1:
+                    audio = waveform
+                else:
+                    start = int(seg.start_ms * _SM_EMB_SR / 1000)
+                    end = int(seg.end_ms * _SM_EMB_SR / 1000)
+                    audio = waveform[start:end]
+            audio = np.asarray(audio, dtype=np.float32)
+            if audio.size < _SM_EMB_SR // 10:
+                continue
+
+            stream = self._extractor.create_stream()
+            stream.accept_waveform(_SM_EMB_SR, audio)
+            stream.input_finished()
+            if not self._extractor.is_ready(stream):
+                continue
+            emb = np.asarray(self._extractor.compute(stream), dtype=np.float32)
+            n = float(np.linalg.norm(emb))
+            if n > 0:
+                emb = emb / n
+            embs.append(emb)
+            valid.append(seg)
+
+        if not embs:
+            dim = getattr(self._extractor, "dim", 192)
+            return np.zeros((0, dim), dtype=np.float32), []
+        return np.stack(embs, axis=0), valid

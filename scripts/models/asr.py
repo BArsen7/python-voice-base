@@ -68,7 +68,7 @@ class FasterWhisperASR(BaseASR):
         segments, _info = self._model.transcribe(
             waveform,
             language=self.language,
-            max_active_paths=self.max_active_paths,
+            beam_size=self.beam_size,
             word_timestamps=self.word_timestamps,
             vad_filter=self.vad_filter,
         )
@@ -317,3 +317,97 @@ class SherpaOnnxWhisperMediumASR(BaseASR):
             ))
         logger.info("sherpa-onnx Whisper: %d words", len(words))
         return words
+
+
+# === SPEED_MODE_ASR ===
+# Appended by apply_speed_mode_v2.sh — do not delete this marker.
+# NOTE: sherpa_onnx is imported lazily inside _lazy_load() so that
+# this module can be imported on machines without the dependency
+# (e.g. faster-whisper-only installs, unit tests, Chaquopy build).
+
+_SPEED_SR = 16000
+_SPEED_TAIL_PADDING_S = 0.2
+
+
+class SherpaOnnxZipformerSmallASR(BaseASR):
+    """Speed Mode ASR: streaming Zipformer-small + greedy_search.
+
+    Implements BaseASR.transcribe() for drop-in use by the existing
+    PipelineOrchestrator, and exposes a streaming API (create_stream /
+    feed_chunk / finalize_stream) for SpeedModeOrchestrator.
+    """
+
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__(config)
+        model_dir = config.get("model_dir")
+        if not model_dir:
+            raise ValueError("SherpaOnnxZipformerSmallASR requires config['model_dir']")
+        self.model_dir = Path(model_dir)
+        self.num_threads = int(config.get("num_threads", 2))
+        self.provider = config.get("provider", "cpu")
+        self._recognizer = None
+
+    def _lazy_load(self):
+        if self._recognizer is not None:
+            return
+        import sherpa_onnx  # lazy — see comment near top of SPEED_MODE_ASR block
+        self._recognizer = sherpa_onnx.OnlineRecognizer.from_transducer(
+            tokens=str(self.model_dir / "tokens.txt"),
+            encoder=str(self.model_dir / "encoder.onnx"),
+            decoder=str(self.model_dir / "decoder.onnx"),
+            joiner=str(self.model_dir / "joiner.onnx"),
+            num_threads=self.num_threads,
+            sample_rate=_SPEED_SR,
+            feature_dim=80,
+            low_freq=20.0,
+            high_freq=-400.0,
+            dither=0.0,
+            normalize_samples=True,
+            snip_edges=False,
+            enable_endpoint_detection=False,
+            decoding_method="greedy_search",
+            provider=self.provider,
+        )
+        logger.info("SherpaOnnxZipformerSmallASR loaded from %s", self.model_dir)
+
+    # --- BaseASR API -----------------------------------------------------
+    def transcribe(
+        self, waveform: np.ndarray, sample_rate: int
+    ) -> List[WordTimestamp]:
+        self._lazy_load()
+        if sample_rate != _SPEED_SR:
+            raise ValueError(f"Speed ASR expects {_SPEED_SR} Hz, got {sample_rate}")
+
+        stream = self.create_stream()
+        self.feed_chunk(stream, waveform)
+        self.finalize_stream(stream)
+
+        # sherpa-onnx API: text via recognizer.get_result(stream), not stream.result
+        text = self._recognizer.get_result(stream).strip()
+        if not text:
+            return []
+
+        # Streaming Zipformer does not expose reliable word-level timestamps;
+        # the orchestrator already knows the VAD segment bounds, so one
+        # WordTimestamp covering the whole segment is sufficient.
+        duration_ms = int(len(waveform) * 1000 / sample_rate)
+        return [WordTimestamp(word=text, start_ms=0, end_ms=duration_ms)]
+
+    # --- Streaming API ---------------------------------------------------
+    def create_stream(self):
+        self._lazy_load()
+        return self._recognizer.create_stream()
+
+    def feed_chunk(self, stream, samples: np.ndarray) -> str:
+        stream.accept_waveform(_SPEED_SR, samples.astype(np.float32))
+        while self._recognizer.is_ready(stream):
+            self._recognizer.decode_stream(stream)
+        return self._recognizer.get_result(stream)
+
+    def finalize_stream(self, stream) -> str:
+        tail = np.zeros(int(_SPEED_TAIL_PADDING_S * _SPEED_SR), dtype=np.float32)
+        stream.accept_waveform(_SPEED_SR, tail)
+        stream.input_finished()
+        while self._recognizer.is_ready(stream):
+            self._recognizer.decode_stream(stream)
+        return self._recognizer.get_result(stream)

@@ -7,7 +7,7 @@ Silero-модель). EnergyVAD — простая энергетическая 
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Sequence
+from typing import Optional, Any, Dict, List, Sequence
 
 import numpy as np
 
@@ -277,3 +277,118 @@ class HybridVAD(BaseVAD):
                 ))
 
         return _hybrid_merge_segments(refined, gap_ms=0)
+
+
+# === SPEED_MODE_VAD ===
+# Appended by apply_speed_mode_v2.sh / patched by patch_interfaces_v3.sh.
+# Keep this marker.
+_SPEED_SR = 16000
+_SPEED_FRAME_MS = 20
+_SPEED_FRAME_SAMPLES = _SPEED_SR * _SPEED_FRAME_MS // 1000
+
+
+class StreamingEnergyVAD(BaseVAD):
+    """Aggressive, chunk-streaming energy VAD for Speed Mode.
+
+    - No Silero ONNX, pure numpy.
+    - Defaults: min_silence=200 ms, max_silence=500 ms.
+    - BaseVAD.detect()  : offline path (segments only).
+    - push_with_audio() : streaming path (segment + audio), used by
+                          SpeedModeOrchestrator so it doesn't need a
+                          rolling buffer of its own.
+    """
+
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__(config)
+        self.threshold = float(config.get("speech_threshold", 0.015))
+        min_sil = int(config.get("min_silence_duration_ms", 200))
+        max_sil = int(config.get("max_silence_duration_ms", 500))
+        max_seg = int(config.get("max_segment_duration_ms", 8000))
+        self.min_silence_frames = max(1, min_sil // _SPEED_FRAME_MS)
+        self.max_silence_frames = max(1, max_sil // _SPEED_FRAME_MS)
+        self.max_segment_samples = max_seg * _SPEED_SR // 1000
+
+        self._silence_run = 0
+        self._active = False
+        self._buffer: List[np.ndarray] = []
+        self._segment_start_sample = 0
+        self._sample_cursor = 0
+
+    # --- BaseVAD API (offline) -----------------------------------------
+    def detect(self, waveform: np.ndarray, sample_rate: int) -> List[SpeechSegment]:
+        if sample_rate != _SPEED_SR:
+            raise ValueError(f"StreamingEnergyVAD expects {_SPEED_SR} Hz, got {sample_rate}")
+        self.reset()
+        segs = self.push(waveform)
+        tail = self.flush()
+        if tail is not None:
+            segs.append(tail)
+        return segs
+
+    # --- streaming internals -------------------------------------------
+    def reset(self) -> None:
+        self._silence_run = 0
+        self._active = False
+        self._buffer.clear()
+        self._segment_start_sample = 0
+        self._sample_cursor = 0
+
+    def _is_speech(self, frame: np.ndarray) -> bool:
+        rms = float(np.sqrt(np.mean(frame * frame)))
+        return rms >= self.threshold
+
+    def _do_push(self, chunk: np.ndarray) -> List[tuple]:
+        out: List[tuple] = []
+        for off in range(0, len(chunk), _SPEED_FRAME_SAMPLES):
+            frame = chunk[off: off + _SPEED_FRAME_SAMPLES]
+            if len(frame) < _SPEED_FRAME_SAMPLES:
+                break
+            self._sample_cursor += _SPEED_FRAME_SAMPLES
+            speech = self._is_speech(frame)
+            if speech:
+                self._silence_run = 0
+                if not self._active:
+                    self._active = True
+                    self._buffer.clear()
+                    self._segment_start_sample = self._sample_cursor - _SPEED_FRAME_SAMPLES
+                self._buffer.append(frame.copy())
+                # Force-close over-long segments: prevents mixing two speakers
+                # that are separated only by a short (<500 ms) pause.
+                seg_len = self._sample_cursor - self._segment_start_sample
+                if seg_len >= self.max_segment_samples:
+                    out.append(self._do_flush())
+            else:
+                self._silence_run += 1
+                if self._active:
+                    self._buffer.append(frame.copy())
+                if self._active and self._silence_run >= self.max_silence_frames:
+                    out.append(self._do_flush())
+        return out
+
+    def _do_flush(self) -> tuple:
+        audio = np.concatenate(self._buffer, axis=0).astype(np.float32)
+        start_ms = int(self._segment_start_sample * 1000 / _SPEED_SR)
+        end_ms = start_ms + int(audio.size * 1000 / _SPEED_SR)
+        self._active = False
+        self._buffer.clear()
+        self._silence_run = 0
+        seg = SpeechSegment(start_ms=start_ms, end_ms=end_ms)
+        return seg, audio
+
+    # --- public streaming API (segment + audio) ------------------------
+    def push_with_audio(self, chunk: np.ndarray) -> List[tuple]:
+        return self._do_push(chunk)
+
+    def flush_with_audio(self):
+        if self._active and self._buffer:
+            return self._do_flush()
+        return None
+
+    # --- BaseVAD-compatible wrappers (drop audio) ----------------------
+    def push(self, chunk: np.ndarray) -> List[SpeechSegment]:
+        return [seg for seg, _ in self._do_push(chunk)]
+
+    def flush(self):
+        pair = self.flush_with_audio()
+        return pair[0] if pair is not None else None
+

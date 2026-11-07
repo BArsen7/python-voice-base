@@ -9,7 +9,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict
+from typing import List, Any, Dict
 
 import numpy as np
 
@@ -203,3 +203,104 @@ class SpectralClusteringWrapper(BaseClustering):
             "Spectral fallback -> Agglomerative: %d clusters (N=%d)", k, n
         )
         return labels.astype(int)
+
+
+# === SPEED_MODE_CLUSTERING ===
+# Appended by apply_speed_mode_v2.sh — do not delete this marker.
+from dataclasses import dataclass as _sm_dataclass  # noqa: E402
+
+
+@_sm_dataclass
+class _SpeakerCentroid:
+    speaker_id: str
+    centroid: np.ndarray
+    n_segments: int = 0
+
+    def update(self, emb: np.ndarray) -> None:
+        self.n_segments += 1
+        alpha = max(0.05, 1.0 / self.n_segments)
+        self.centroid = (1 - alpha) * self.centroid + alpha * emb
+        n = float(np.linalg.norm(self.centroid))
+        if n > 0:
+            self.centroid = self.centroid / n
+
+
+class OnlineThresholdClustering(BaseClustering):
+    """O(N*K) online cosine-threshold speaker clustering for Speed Mode.
+
+    Compatible with BaseClustering.fit_predict() — processes embeddings
+    sequentially (streaming logic), returns an int label array.
+    Also exposes assign(embedding) -> str for real-time streaming.
+    """
+
+    def __init__(self, config: Dict[str, Any]):
+        super().__init__(config)
+        self.threshold = float(config.get("similarity_threshold", 0.65))
+        self.max_speakers = int(config.get("max_speakers", 3))
+        # Short segments create noisy centroids; only allow new speaker
+        # creation from segments at least this long.
+        self.min_new_speaker_duration_ms = int(
+            config.get("min_new_speaker_duration_ms", 2000)
+        )
+        self._centroids: List[_SpeakerCentroid] = []
+        self._next_id = 0
+
+    # --- BaseClustering API ---------------------------------------------
+    def fit_predict(self, embeddings: np.ndarray) -> np.ndarray:
+        if len(embeddings) == 0:
+            return np.array([], dtype=int)
+        self.reset()
+        ids: List[int] = []
+        for emb in embeddings:
+            sid = self.assign(emb)
+            ids.append(int(sid.split("_")[-1]))
+        return np.asarray(ids, dtype=int)
+
+    # --- Streaming API --------------------------------------------------
+    def reset(self) -> None:
+        self._centroids.clear()
+        self._next_id = 0
+
+    def assign(self, embedding: np.ndarray, duration_ms: int | None = None) -> str:
+        emb = np.asarray(embedding, dtype=np.float32)
+        n = float(np.linalg.norm(emb))
+        if n == 0.0:
+            raise ValueError("embedding has zero norm")
+        emb = emb / n
+
+        is_short = (
+            duration_ms is not None
+            and duration_ms < self.min_new_speaker_duration_ms
+        )
+
+        # No centroids yet: only a long-enough segment may seed the first
+        # speaker. Short segments before that are tagged "unknown".
+        if not self._centroids:
+            if is_short:
+                return "unknown"
+            return self._create(emb)
+
+        sims = [float(np.dot(c.centroid, emb)) for c in self._centroids]
+        best = int(np.argmax(sims))
+
+        if sims[best] >= self.threshold:
+            self._centroids[best].update(emb)
+            return self._centroids[best].speaker_id
+
+        if len(self._centroids) < self.max_speakers and not is_short:
+            return self._create(emb)
+
+        # Max speakers reached and no confident match.
+        # Long segment -> real new voice: force-assign AND train the centroid
+        #                 (alpha = max(0.05, 1/n) keeps this gentle and adaptive).
+        # Short segment -> likely noise: force-assign, no update.
+        if not is_short:
+            self._centroids[best].update(emb)
+        return self._centroids[best].speaker_id
+
+    def _create(self, emb: np.ndarray) -> str:
+        sid = f"spk_{self._next_id}"
+        self._next_id += 1
+        self._centroids.append(_SpeakerCentroid(speaker_id=sid, centroid=emb.copy(),
+                                                n_segments=1))
+        return sid

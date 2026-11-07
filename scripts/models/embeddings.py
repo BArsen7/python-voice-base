@@ -242,3 +242,85 @@ def _slice_waveform(
     i0 = max(0, int(start_ms * sample_rate / 1000))
     i1 = min(len(waveform), int(end_ms * sample_rate / 1000))
     return waveform[i0:i1]
+
+
+def extract_windowed_embeddings(extractor, waveform, sample_rate,
+                                window_sec=2.5, hop_sec=1.0,
+                                min_remainder_sec=0.5):
+    """
+    Извлечение эмбеддингов спикера на перекрывающихся окнах.
+
+    Для Accuracy Mode окно 2.5 с даёт более стабильный вектор спикера,
+    чем покадровое извлечение с шагом 1 с.
+
+    Parameters
+    ----------
+    extractor : object
+        Экстрактор с методом `extract(waveform, sample_rate)` или
+        `compute_embedding(waveform, sample_rate)`.
+    waveform : np.ndarray
+        Аудио (моно, float32).
+    sample_rate : int
+    window_sec : float
+        Длина окна, сек (рекомендуется 2.0-3.0).
+    hop_sec : float
+        Шаг между окнами, сек.
+    min_remainder_sec : float
+        Минимальная длина хвоста — если короче, отбрасываем.
+
+    Returns
+    -------
+    List[Tuple[int, int, np.ndarray]]
+        Список (start_ms, end_ms, embedding).
+    """
+    n = len(waveform)
+    window_samples = int(window_sec * sample_rate)
+    hop_samples = int(hop_sec * sample_rate)
+    min_remainder_samples = int(min_remainder_sec * sample_rate)
+
+    def _call(chunk):
+        for attr in ('extract', 'compute_embedding', 'compute'):
+            fn = getattr(extractor, attr, None)
+            if callable(fn):
+                try:
+                    emb = fn(chunk, sample_rate)
+                except TypeError:
+                    try:
+                        emb = fn(chunk)
+                    except TypeError:
+                        continue
+                if emb is not None:
+                    return np.asarray(emb, dtype=np.float32).reshape(-1)
+        raise AttributeError(
+            "extractor has no compatible extract/compute_embedding method"
+        )
+
+    out = []
+    if n < window_samples:
+        emb = _call(waveform)
+        if emb is not None and emb.size > 0:
+            out.append((0, int(n / sample_rate * 1000), emb))
+        return out
+
+    for start in range(0, n - window_samples + 1, hop_samples):
+        chunk = waveform[start:start + window_samples]
+        emb = _call(chunk)
+        if emb is not None and emb.size > 0:
+            out.append((
+                int(start / sample_rate * 1000),
+                int((start + window_samples) / sample_rate * 1000),
+                emb,
+            ))
+
+    last_end = ((n - window_samples) // hop_samples) * hop_samples + window_samples
+    remainder = n - last_end
+    if remainder >= min_remainder_samples:
+        chunk = waveform[last_end:]
+        emb = _call(chunk)
+        if emb is not None and emb.size > 0:
+            out.append((
+                int(last_end / sample_rate * 1000),
+                int(n / sample_rate * 1000),
+                emb,
+            ))
+    return out

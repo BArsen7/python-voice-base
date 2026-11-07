@@ -189,3 +189,91 @@ def _remove_short(mask: np.ndarray, min_len_frames: int) -> np.ndarray:
         else:
             i += 1
     return out
+
+
+def _hybrid_merge_segments(segs, gap_ms=0):
+    """Склейка пересекающихся/близких сегментов речи (совместимо с любым классом)."""
+    if not segs:
+        return []
+    fn = globals().get('_merge_segments') or globals().get('merge_segments')
+    if callable(fn):
+        try:
+            return fn(segs, gap_ms=gap_ms)
+        except TypeError:
+            try:
+                return fn(segs)
+            except Exception:
+                pass
+    ordered = sorted(segs, key=lambda s: s.start_ms)
+    out = [ordered[0]]
+    for s in ordered[1:]:
+        last = out[-1]
+        if s.start_ms <= last.end_ms + gap_ms:
+            new_end = max(last.end_ms, s.end_ms)
+            try:
+                out[-1] = type(last)(start_ms=last.start_ms, end_ms=new_end)
+            except Exception:
+                try:
+                    last.end_ms = new_end
+                except Exception:
+                    out.append(s)
+        else:
+            out.append(s)
+    return out
+
+
+class HybridVAD(BaseVAD):
+    """
+    Двухступенчатый VAD:
+      1) EnergyVAD  — быстрая грубая отсечка очевидной тишины;
+      2) SileroVAD  — точное уточнение границ речи с пониженным порогом
+                      и уменьшенной min_speech_duration, чтобы не обрезать
+                      тихие начала/концы фраз и короткие реплики.
+
+    Рекомендуемые параметры для Accuracy Mode:
+        energy_threshold_db: -35.0
+        silero_threshold: 0.3
+        min_speech_duration_ms: 300
+        speech_pad_ms: 100
+    """
+
+    def __init__(self, config):
+        super().__init__(config)
+
+        energy_cfg = {
+            "energy_threshold_db": config.get("energy_threshold_db", -35.0),
+            "min_speech_duration_ms": config.get("energy_min_speech_ms", 100),
+            "min_silence_duration_ms": config.get("energy_min_silence_ms", 200),
+            "speech_pad_ms": 0,
+            "frame_ms": config.get("energy_frame_ms", 20),
+        }
+        self._energy_vad = EnergyVAD(energy_cfg)
+
+        silero_cfg = {
+            "threshold": config.get("silero_threshold", 0.3),
+            "min_speech_duration_ms": config.get("min_speech_duration_ms", 300),
+            "speech_pad_ms": config.get("speech_pad_ms", 100),
+            "window_size_samples": config.get("silero_window_size_samples", 512),
+        }
+        self._silero_vad = SileroVAD(silero_cfg)
+
+    def detect(self, waveform, sample_rate):
+        coarse = self._energy_vad.detect(waveform, sample_rate)
+        if not coarse:
+            return []
+
+        refined = []
+        for seg in coarse:
+            start_sample = int(seg.start_ms * sample_rate / 1000)
+            end_sample = int(seg.end_ms * sample_rate / 1000)
+            chunk = waveform[start_sample:end_sample]
+            if len(chunk) == 0:
+                continue
+            silero_segs = self._silero_vad.detect(chunk, sample_rate)
+            for s in silero_segs:
+                refined.append(SpeechSegment(
+                    start_ms=s.start_ms + seg.start_ms,
+                    end_ms=s.end_ms + seg.start_ms,
+                ))
+
+        return _hybrid_merge_segments(refined, gap_ms=0)

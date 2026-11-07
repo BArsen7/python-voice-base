@@ -68,7 +68,7 @@ class FasterWhisperASR(BaseASR):
         segments, _info = self._model.transcribe(
             waveform,
             language=self.language,
-            beam_size=self.beam_size,
+            max_active_paths=self.max_active_paths,
             word_timestamps=self.word_timestamps,
             vad_filter=self.vad_filter,
         )
@@ -232,3 +232,88 @@ class SherpaOnnxASR(BaseASR):
                 ]
         return words
 
+
+class SherpaOnnxWhisperMediumASR(BaseASR):
+    """
+    ASR на базе Whisper (medium / large-v3) в формате ONNX через sherpa-onnx.
+    Для Android обязательно использовать INT8- или FP16-квантованные модели.
+
+    Пример конфига (configs/accuracy_mode.yaml):
+        encoder: "models_bundle/whisper-medium/medium-encoder.int8.onnx"
+        decoder: "models_bundle/whisper-medium/medium-decoder.int8.onnx"
+        tokens:  "models_bundle/whisper-medium/medium-tokens.txt"
+        decoding_method: "modified_beam_search"   # обязательно для Accuracy Mode
+        beam_size: 4
+        num_paths: 4
+    """
+
+    def __init__(self, config):
+        super().__init__(config)
+        self.language = config.get("language", "ru")
+        self.encoder = config.get("encoder")
+        self.decoder = config.get("decoder")
+        self.tokens = config.get("tokens")
+        self.decoding_method = config.get("decoding_method", "modified_beam_search")
+        self.max_active_paths = int(
+            config.get("max_active_paths", config.get("beam_size", 4))
+        )
+        self.num_threads = int(config.get("num_threads", 4))
+        self._recognizer = None  # lazy
+
+    def _lazy_load(self):
+        if self._recognizer is not None:
+            return
+        try:
+            import sherpa_onnx
+        except ImportError as e:
+            raise ImportError(
+                "SherpaOnnxWhisperMediumASR requires sherpa-onnx. "
+                "Install with: pip install sherpa-onnx"
+            ) from e
+
+        if not all([self.encoder, self.decoder, self.tokens]):
+            raise ValueError(
+                "SherpaOnnxWhisperMediumASR requires encoder, decoder и tokens."
+            )
+
+        self._recognizer = sherpa_onnx.OfflineRecognizer.from_whisper(
+            encoder=self.encoder,
+            decoder=self.decoder,
+            tokens=self.tokens,
+            language=self.language,
+            decoding_method=self.decoding_method,
+            max_active_paths=self.max_active_paths,
+            num_threads=self.num_threads,
+            debug=False,
+        )
+        logger.info(
+            "sherpa-onnx Whisper loaded: lang=%s method=%s beam=%d paths=%d",
+            self.language, self.decoding_method, self.max_active_paths,
+        )
+
+    def transcribe(self, waveform, sample_rate):
+        self._lazy_load()
+        if sample_rate != 16000:
+            raise ValueError("SherpaOnnxWhisperMediumASR expects 16 kHz audio")
+
+        stream = self._recognizer.create_stream()
+        stream.accept_waveform(sample_rate, waveform)
+        self._recognizer.decode_stream(stream)
+        result = stream.result
+
+        words = []
+        if getattr(result, "tokens", None) and getattr(result, "timestamps", None):
+            for token, ts in zip(result.tokens, result.timestamps):
+                words.append(WordTimestamp(
+                    word=token,
+                    start_ms=int(ts.start * 1000),
+                    end_ms=int(ts.end * 1000),
+                ))
+        else:
+            words.append(WordTimestamp(
+                word=result.text.strip(),
+                start_ms=0,
+                end_ms=int(len(waveform) / sample_rate * 1000),
+            ))
+        logger.info("sherpa-onnx Whisper: %d words", len(words))
+        return words

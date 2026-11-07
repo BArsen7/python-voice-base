@@ -32,6 +32,7 @@ from scripts.core.interfaces import (
     TranscriptEntry,
     WordTimestamp,
 )
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -289,3 +290,123 @@ def _ensure_monotonic(entries: List[TranscriptEntry]) -> List[TranscriptEntry]:
         if entries[i].end_ms < entries[i].start_ms:
             entries[i].end_ms = entries[i].start_ms
     return entries
+
+
+def _align_get(obj, key, default=None):
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def _align_set(obj, key, value):
+    if isinstance(obj, dict):
+        obj[key] = value
+    else:
+        setattr(obj, key, value)
+
+
+def median_smooth_speakers(segments, window=3, key='speaker_id'):
+    """
+    Медианное сглаживание меток спикеров (устраняет "мигание" A→B→A).
+    Работает с dict-ами и с объектами.
+    """
+    from collections import Counter
+    n = len(segments)
+    if n < window or window < 3:
+        return list(segments)
+    half = window // 2
+    result = list(segments)
+    for i in range(half, n - half):
+        vals = [_align_get(segments[j], key) for j in range(i - half, i + half + 1)]
+        most = Counter(vals).most_common(1)[0][0]
+        _align_set(result[i], key, most)
+    return result
+
+
+def viterbi_smooth_speakers(segments, key='speaker_id'):
+    """
+    Упрощённое Viterbi-подобное сглаживание по меткам спикеров:
+    короткие сегменты, зажатые между двумя одинаковыми спикерами,
+    поглощаются соседями.
+    """
+    n = len(segments)
+    if n < 3:
+        return list(segments)
+    durations = []
+    for seg in segments:
+        s = _align_get(seg, 'start_ms', 0)
+        e = _align_get(seg, 'end_ms', 0)
+        durations.append(max(1, e - s))
+    median_dur = sorted(durations)[len(durations) // 2]
+    result = list(segments)
+    for i in range(1, n - 1):
+        if durations[i] < median_dur * 0.5:
+            prev = _align_get(result[i - 1], key)
+            nxt = _align_get(result[i + 1], key)
+            cur = _align_get(result[i], key)
+            if prev == nxt and cur != prev:
+                _align_set(result[i], key, prev)
+    return result
+
+
+_RU_NUM_WORDS = {
+    "ноль": "0", "один": "1", "одна": "1", "два": "2", "две": "2",
+    "три": "3", "четыре": "4", "пять": "5", "шесть": "6", "семь": "7",
+    "восемь": "8", "девять": "9", "десять": "10", "одиннадцать": "11",
+    "двенадцать": "12", "тринадцать": "13", "четырнадцать": "14",
+    "пятнадцать": "15", "шестнадцать": "16", "семнадцать": "17",
+    "восемнадцать": "18", "девятнадцать": "19", "двадцать": "20",
+    "тридцать": "30", "сорок": "40", "пятьдесят": "50",
+    "шестьдесят": "60", "семьдесят": "70", "восемьдесят": "80",
+    "девяносто": "90", "сто": "100",
+}
+
+
+def normalize_russian_text(text, fix_numbers=True, fix_punctuation=True):
+    """Локальная нормализация чисел и базовой пунктуации (без внешних API)."""
+    if not text:
+        return text
+    if fix_numbers:
+        for word, digit in _RU_NUM_WORDS.items():
+            text = re.sub(rf"\b{word}\b", digit, text, flags=re.IGNORECASE)
+    if fix_punctuation:
+        text = re.sub(
+            r"(^|[.!?]\s+)([а-яё])",
+            lambda m: m.group(1) + m.group(2).upper(),
+            text,
+        )
+        text = re.sub(r"\s+([,.!?;:])", r"\1", text)
+        text = re.sub(r"([,.!?;:])(?=\S)", r"\1 ", text)
+        text = re.sub(r"\s{2,}", " ", text).strip()
+    return text
+
+
+def postprocess_transcript(segments,
+                           smooth_method="median",
+                           smooth_window=3,
+                           fix_numbers=True,
+                           fix_punctuation=True,
+                           speaker_key="speaker_id",
+                           text_key="text"):
+    """
+    Пост-обработка последовательности сегментов транскрипта:
+      1. Сглаживание меток спикеров (median / viterbi).
+      2. Локальная нормализация текста (числа, базовая пунктуация).
+
+    Возвращает новый список; исходные объекты не мутируются.
+    """
+    import copy
+    work = [dict(s) if isinstance(s, dict) else copy.copy(s) for s in segments]
+
+    if smooth_method == "median":
+        work = median_smooth_speakers(work, window=smooth_window, key=speaker_key)
+    elif smooth_method == "viterbi":
+        work = viterbi_smooth_speakers(work, key=speaker_key)
+
+    for seg in work:
+        txt = _align_get(seg, text_key, "")
+        if txt:
+            _align_set(seg, text_key, normalize_russian_text(
+                txt, fix_numbers=fix_numbers, fix_punctuation=fix_punctuation,
+            ))
+    return work

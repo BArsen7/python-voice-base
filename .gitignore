@@ -58,3 +58,28 @@ Thumbs.db
 # --- Large data downloads (regenerable, not committed) ---
 data/ami_full/
 data/ami_full/_ami_cache/
+
+# --- Направление 1: Fast Mode ---
+# Модели (скачиваются скриптами fm_step*.sh)
+models/
+# Runtime state
+speaker_db/
+# Генерируемые калибровочные данные
+data/calib_ru/
+# Промежуточные benchmark-артефакты (отдельные прогоны)
+benchmark_lang_*/
+benchmark_results/
+# Результаты бенчмарков (кроме финальных, их добавляем --force)
+results/fast_mode/baseline/
+results/fast_mode/sherpa/
+results/fast_mode/onnx_emb/
+results/fast_mode/en_fix_a/
+results/fast_mode/en_fix_b/
+results/fast_mode/en_sherpa/
+results/fast_mode/step*/
+results/fast_mode/*.log
+results/fast_mode/*.stdout
+# Кэш
+__pycache__/
+*.pyc
+.venv/

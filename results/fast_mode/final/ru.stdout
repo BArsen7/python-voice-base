@@ -1,0 +1,42 @@
+
+============================================================================
+config                     N   mean DER  median DER  mean RTF  max RTF  Δspk
+----------------------------------------------------------------------------
+baseline_ru               30       2.84        2.59     0.113    0.188   0.6
+============================================================================
+DER в %, RTF = processing_time / audio_duration (меньше = быстрее).
+Δspk = средняя |pred_speakers - ref_speakers|.
+
+Per-case DER breakdown (% of ref speech):
+config             case                       DER    miss      FA    conf
+--------------------------------------------------------------------------------
+baseline_ru        ru_rec_0000.wav          3.44%   0.71%   0.00%   2.55%
+baseline_ru        ru_rec_0001.wav          2.47%   0.28%   0.00%   2.07%
+baseline_ru        ru_rec_0002.wav          0.07%   0.06%   0.00%   0.00%
+baseline_ru        ru_rec_0003.wav         10.57%   0.56%   0.00%   9.45%
+baseline_ru        ru_rec_0004.wav          6.55%   0.42%   0.00%   5.81%
+baseline_ru        ru_rec_0005.wav          9.57%   0.49%   0.00%   8.61%
+baseline_ru        ru_rec_0006.wav          5.27%   0.00%   0.00%   5.01%
+baseline_ru        ru_rec_0007.wav          0.44%   0.42%   0.00%   0.00%
+baseline_ru        ru_rec_0008.wav          0.00%   0.00%   0.00%   0.00%
+baseline_ru        ru_rec_0009.wav          1.29%   1.24%   0.00%   0.00%
+baseline_ru        ru_rec_0010.wav          0.06%   0.06%   0.00%   0.00%
+baseline_ru        ru_rec_0011.wav          1.48%   0.28%   0.00%   1.13%
+baseline_ru        ru_rec_0012.wav          0.68%   0.64%   0.00%   0.00%
+baseline_ru        ru_rec_0013.wav          4.08%   0.63%   0.00%   3.25%
+baseline_ru        ru_rec_0014.wav          0.22%   0.20%   0.00%   0.00%
+baseline_ru        ru_rec_0015.wav          1.40%   1.33%   0.00%   0.00%
+baseline_ru        ru_rec_0016.wav          4.20%   1.38%   0.00%   2.58%
+baseline_ru        ru_rec_0017.wav          3.24%   0.28%   0.00%   2.77%
+baseline_ru        ru_rec_0018.wav          0.14%   0.13%   0.00%   0.00%
+baseline_ru        ru_rec_0019.wav          3.53%   0.06%   0.00%   3.26%
+baseline_ru        ru_rec_0020.wav          2.70%   0.50%   0.00%   2.05%
+baseline_ru        ru_rec_0021.wav          0.55%   0.52%   0.00%   0.00%
+baseline_ru        ru_rec_0022.wav          2.74%   0.02%   0.00%   2.60%
+baseline_ru        ru_rec_0023.wav          2.78%   0.42%   0.00%   2.21%
+baseline_ru        ru_rec_0024.wav          7.46%   0.42%   0.00%   6.68%
+baseline_ru        ru_rec_0025.wav          0.12%   0.11%   0.00%   0.00%
+baseline_ru        ru_rec_0026.wav          3.42%   0.42%   0.00%   2.83%
+baseline_ru        ru_rec_0027.wav          6.02%   0.36%   0.00%   5.28%
+baseline_ru        ru_rec_0028.wav          0.67%   0.28%   0.00%   0.36%
+baseline_ru        ru_rec_0029.wav          0.14%   0.13%   0.00%   0.00%

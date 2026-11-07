@@ -1,0 +1,486 @@
+INFO Найдено кейсов: 30
+INFO Загружен конфиг: baseline_ru
+INFO === Конфигурация: baseline_ru ===
+INFO   Кейс: ru_rec_0000.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 20 segments
+INFO Energy heuristic overlap: 83 segments
+INFO Overlap: 83 segments
+INFO Applied quirks (see `speechbrain.utils.quirks`): [allow_tf32, disable_jit_profiling]
+INFO Excluded quirks specified by the `SB_DISABLE_QUIRKS` environment (comma-separated list): []
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(67, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 122 words
+INFO Alignment: 2 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=3.44%  RTF=0.188  spk=2/1
+INFO   Кейс: ru_rec_0001.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 20 segments
+INFO Energy heuristic overlap: 64 segments
+INFO Overlap: 64 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(67, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 139 words
+INFO Alignment: 5 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=2.47%  RTF=0.119  spk=2/1
+INFO   Кейс: ru_rec_0002.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 23 segments
+INFO Energy heuristic overlap: 75 segments
+INFO Overlap: 75 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(63, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 113 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.07%  RTF=0.126  spk=1/1
+INFO   Кейс: ru_rec_0003.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 22 segments
+INFO Energy heuristic overlap: 58 segments
+INFO Overlap: 58 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(61, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 122 words
+INFO Alignment: 7 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=10.57%  RTF=0.118  spk=2/1
+INFO   Кейс: ru_rec_0004.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 22 segments
+INFO Energy heuristic overlap: 74 segments
+INFO Overlap: 74 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(64, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 119 words
+INFO Alignment: 10 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=6.55%  RTF=0.108  spk=2/1
+INFO   Кейс: ru_rec_0005.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 23 segments
+INFO Energy heuristic overlap: 61 segments
+INFO Overlap: 61 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(62, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 133 words
+INFO Alignment: 8 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=9.57%  RTF=0.107  spk=2/1
+INFO   Кейс: ru_rec_0006.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 19 segments
+INFO Energy heuristic overlap: 64 segments
+INFO Overlap: 64 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(64, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 133 words
+INFO Alignment: 5 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=5.27%  RTF=0.109  spk=2/1
+INFO   Кейс: ru_rec_0007.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 12 segments
+INFO Energy heuristic overlap: 63 segments
+INFO Overlap: 63 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(71, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 135 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.44%  RTF=0.126  spk=1/1
+INFO   Кейс: ru_rec_0008.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 15 segments
+INFO Energy heuristic overlap: 61 segments
+INFO Overlap: 61 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(65, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 127 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.00%  RTF=0.116  spk=1/1
+INFO   Кейс: ru_rec_0009.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 16 segments
+INFO Energy heuristic overlap: 78 segments
+INFO Overlap: 78 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(68, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 103 words
+INFO Alignment: 2 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=1.29%  RTF=0.110  spk=1/1
+INFO   Кейс: ru_rec_0010.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 22 segments
+INFO Energy heuristic overlap: 58 segments
+INFO Overlap: 58 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(58, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 131 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.06%  RTF=0.103  spk=1/1
+INFO   Кейс: ru_rec_0011.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 14 segments
+INFO Energy heuristic overlap: 60 segments
+INFO Overlap: 60 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(71, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 143 words
+INFO Alignment: 2 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=1.48%  RTF=0.112  spk=2/1
+INFO   Кейс: ru_rec_0012.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 19 segments
+INFO Energy heuristic overlap: 64 segments
+INFO Overlap: 64 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(65, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 110 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.68%  RTF=0.105  spk=1/1
+INFO   Кейс: ru_rec_0013.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 22 segments
+INFO Energy heuristic overlap: 67 segments
+INFO Overlap: 67 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(64, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 116 words
+INFO Alignment: 6 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=4.08%  RTF=0.113  spk=2/1
+INFO   Кейс: ru_rec_0014.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 10 segments
+INFO Energy heuristic overlap: 68 segments
+INFO Overlap: 68 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(72, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 122 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.22%  RTF=0.127  spk=1/1
+INFO   Кейс: ru_rec_0015.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 11 segments
+INFO Energy heuristic overlap: 80 segments
+INFO Overlap: 80 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(72, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 140 words
+INFO Alignment: 2 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=1.40%  RTF=0.115  spk=1/1
+INFO   Кейс: ru_rec_0016.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 27 segments
+INFO Energy heuristic overlap: 64 segments
+INFO Overlap: 64 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(61, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 115 words
+INFO Alignment: 4 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=4.20%  RTF=0.100  spk=2/1
+INFO   Кейс: ru_rec_0017.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 20 segments
+INFO Energy heuristic overlap: 66 segments
+INFO Overlap: 66 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(66, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 114 words
+INFO Alignment: 6 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=3.24%  RTF=0.108  spk=2/1
+INFO   Кейс: ru_rec_0018.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 15 segments
+INFO Energy heuristic overlap: 63 segments
+INFO Overlap: 63 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(64, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 121 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.14%  RTF=0.115  spk=1/1
+INFO   Кейс: ru_rec_0019.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 18 segments
+INFO Energy heuristic overlap: 83 segments
+INFO Overlap: 83 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(69, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 144 words
+INFO Alignment: 4 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=3.53%  RTF=0.112  spk=2/1
+INFO   Кейс: ru_rec_0020.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 20 segments
+INFO Energy heuristic overlap: 69 segments
+INFO Overlap: 69 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(65, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 119 words
+INFO Alignment: 5 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=2.70%  RTF=0.107  spk=2/1
+INFO   Кейс: ru_rec_0021.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 31 segments
+INFO Energy heuristic overlap: 82 segments
+INFO Overlap: 82 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(56, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 84 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.55%  RTF=0.095  spk=1/1
+INFO   Кейс: ru_rec_0022.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 22 segments
+INFO Energy heuristic overlap: 82 segments
+INFO Overlap: 82 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(66, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 117 words
+INFO Alignment: 5 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=2.74%  RTF=0.107  spk=2/1
+INFO   Кейс: ru_rec_0023.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 28 segments
+INFO Energy heuristic overlap: 77 segments
+INFO Overlap: 77 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(58, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 148 words
+INFO Alignment: 5 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=2.78%  RTF=0.097  spk=2/1
+INFO   Кейс: ru_rec_0024.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 27 segments
+INFO Energy heuristic overlap: 68 segments
+INFO Overlap: 68 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(63, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 118 words
+INFO Alignment: 8 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=7.46%  RTF=0.105  spk=2/1
+INFO   Кейс: ru_rec_0025.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 26 segments
+INFO Energy heuristic overlap: 64 segments
+INFO Overlap: 64 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(59, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 122 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.12%  RTF=0.098  spk=1/1
+INFO   Кейс: ru_rec_0026.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 24 segments
+INFO Energy heuristic overlap: 73 segments
+INFO Overlap: 73 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(62, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 123 words
+INFO Alignment: 6 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=3.42%  RTF=0.112  spk=2/1
+INFO   Кейс: ru_rec_0027.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 21 segments
+INFO Energy heuristic overlap: 78 segments
+INFO Overlap: 78 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(61, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 113 words
+INFO Alignment: 5 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=6.02%  RTF=0.104  spk=2/1
+INFO   Кейс: ru_rec_0028.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 13 segments
+INFO Energy heuristic overlap: 58 segments
+INFO Overlap: 58 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(70, 256)
+INFO Agglomerative: 2 clusters
+INFO Clustering: 2 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 125 words
+INFO Alignment: 2 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.67%  RTF=0.118  spk=2/1
+INFO   Кейс: ru_rec_0029.wav
+INFO Pipeline initialized: VAD=SileroVAD, Overlap=EnergyHeuristicOverlapDetector, Emb=WeSpeakerEmbeddingExtractor, Clust=AgglomerativeClusteringWrapper, ASR=SherpaOnnxASR
+INFO Silero VAD loaded via vadonnx (ONNX Runtime)
+INFO VAD: 16 segments
+INFO Energy heuristic overlap: 69 segments
+INFO Overlap: 69 segments
+INFO WeSpeaker ResNet34 ONNX loaded from models/wespeaker_resnet34.onnx
+INFO Embeddings: shape=(69, 256)
+INFO Agglomerative: 1 clusters
+INFO Clustering: 1 clusters
+INFO sherpa-onnx Zipformer loaded from explicit paths
+INFO ASR: 133 words
+INFO Alignment: 1 transcript entries
+/home/barsen/Python/hakaton/ai/python-voice-base/.venv/lib64/python3.11/site-packages/pyannote/metrics/utils.py:199: UserWarning: 'uem' was approximated by the union of 'reference' and 'hypothesis' extents.
+  warnings.warn(
+INFO     DER=0.14%  RTF=0.116  spk=1/1
+INFO Результаты сохранены: results/fast_mode/final/ru/benchmark-20261107-085442.json

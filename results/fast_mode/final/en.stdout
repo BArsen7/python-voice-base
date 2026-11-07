@@ -1,0 +1,42 @@
+
+============================================================================
+config                     N   mean DER  median DER  mean RTF  max RTF  Δspk
+----------------------------------------------------------------------------
+baseline_en               30      22.85       23.99     0.124    0.259   0.4
+============================================================================
+DER в %, RTF = processing_time / audio_duration (меньше = быстрее).
+Δspk = средняя |pred_speakers - ref_speakers|.
+
+Per-case DER breakdown (% of ref speech):
+config             case                       DER    miss      FA    conf
+--------------------------------------------------------------------------------
+baseline_en        en_0000.wav            SKIP: ref/audio=0.49 < 0.50
+baseline_en        en_0001.wav            SKIP: ref/audio=0.29 < 0.50
+baseline_en        en_0002.wav            SKIP: ref/audio=0.22 < 0.50
+baseline_en        en_0003.wav             33.02%   0.00%   0.00%  30.47%
+baseline_en        en_0004.wav              2.63%   2.55%   0.00%   0.00%
+baseline_en        en_0005.wav            SKIP: ref/audio=0.07 < 0.50
+baseline_en        en_0006.wav             39.30%   0.00%   0.00%  37.32%
+baseline_en        en_0007.wav            SKIP: ref/audio=0.41 < 0.50
+baseline_en        en_0008.wav            SKIP: ref/audio=0.27 < 0.50
+baseline_en        en_0009.wav            SKIP: ref/audio=0.25 < 0.50
+baseline_en        en_0010.wav            SKIP: ref/audio=0.23 < 0.50
+baseline_en        en_0011.wav              3.81%   0.95%   0.00%   2.76%
+baseline_en        en_0012.wav             23.99%   0.41%   0.00%  22.75%
+baseline_en        en_0013.wav            SKIP: ref/audio=0.24 < 0.50
+baseline_en        en_0014.wav            SKIP: ref/audio=0.34 < 0.50
+baseline_en        en_0015.wav            SKIP: ref/audio=0.05 < 0.50
+baseline_en        en_0016.wav              9.68%   0.42%   0.00%   9.05%
+baseline_en        en_0017.wav            SKIP: ref/audio=0.43 < 0.50
+baseline_en        en_0018.wav            SKIP: ref/audio=0.15 < 0.50
+baseline_en        en_0019.wav             18.71%   1.71%   0.00%  16.66%
+baseline_en        en_0020.wav             29.21%   1.98%   0.00%  25.68%
+baseline_en        en_0021.wav            SKIP: ref/audio=0.15 < 0.50
+baseline_en        en_0022.wav             45.74%   1.42%   0.00%  41.82%
+baseline_en        en_0023.wav            SKIP: ref/audio=0.23 < 0.50
+baseline_en        en_0024.wav              5.98%   1.16%   0.00%   4.04%
+baseline_en        en_0025.wav             32.11%   0.95%   0.00%  30.30%
+baseline_en        en_0026.wav            SKIP: ref/audio=0.23 < 0.50
+baseline_en        en_0027.wav            SKIP: ref/audio=0.33 < 0.50
+baseline_en        en_0028.wav             45.18%   2.12%   0.00%  39.73%
+baseline_en        en_0029.wav              7.68%   2.76%   0.00%   4.78%

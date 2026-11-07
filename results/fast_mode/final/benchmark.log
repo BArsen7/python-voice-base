@@ -1,0 +1,8 @@
+[OK] ru -> results/fast_mode/final/ru/benchmark-20261107-085442.json
+[OK] en -> results/fast_mode/final/en/benchmark-20261107-085550.json
+
+## Final (fast mode: Sherpa-Zipformer + ONNX-WeSpeaker)
+| Lang | DER % | RTF | n | spk_err |
+|---|---|---|---|---|
+| RU | 2.84 | 0.113 | 30 | 0.600 |
+| EN | 22.85 | 0.124 | 30 | 0.385 |

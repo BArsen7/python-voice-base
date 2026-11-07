@@ -1,0 +1,622 @@
+{
+  "timestamp": "20261107-081326",
+  "audio_dir": "data/short_ru",
+  "configs": [
+    "baseline_ru"
+  ],
+  "min_ref_ratio": 0.5,
+  "uem_from_ref": true,
+  "summaries": [
+    {
+      "config_name": "baseline_ru",
+      "n_cases": 30,
+      "mean_der": 0.02692509385605295,
+      "median_der": 0.02268771710133434,
+      "mean_rtf": 0.12059985609891252,
+      "max_rtf": 0.1723118683334178,
+      "mean_speakers_error": 0.5666666666666667,
+      "cases": [
+        {
+          "audio_path": "data/short_ru/ru_rec_0000.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.03437105674520222,
+          "jer": 0.09894252260066043,
+          "wall_time_s": 10.338712100005068,
+          "rtf": 0.1723118683334178,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9465212043424782,
+            "missed detection": 0.006167887765834117,
+            "correct": 0.9139882703174858,
+            "confusion": 0.02636504625915835,
+            "diarization error rate": 0.0006127075734032518
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0001.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.01930078763560717,
+          "jer": 0.07751213733962864,
+          "wall_time_s": 6.974119444996177,
+          "rtf": 0.11623532408326961,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.951397971086211,
+            "missed detection": 0.0018733872963133443,
+            "correct": 0.9330352408893287,
+            "confusion": 0.016489342900569144,
+            "diarization error rate": 0.00034111179589988285
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0002.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0,
+          "jer": 0.07200000000000012,
+          "wall_time_s": 6.714648534005391,
+          "rtf": 0.11191080890008985,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9462269223875245,
+            "missed detection": 0.0,
+            "correct": 0.9462269223875245,
+            "confusion": 0.0,
+            "diarization error rate": 0.0
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0003.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.10574996723398679,
+          "jer": 0.15449348733508794,
+          "wall_time_s": 7.015509274999204,
+          "rtf": 0.11692515458332006,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9468169972876668,
+            "missed detection": 0.0,
+            "correct": 0.8466911308479143,
+            "confusion": 0.10012586643975252,
+            "diarization error rate": 0.0018747002647447532
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0004.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.06543868153174996,
+          "jer": 0.1259845153091084,
+          "wall_time_s": 7.193054225004744,
+          "rtf": 0.11988423708341239,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9512307583173726,
+            "missed detection": 0.0032985741647158957,
+            "correct": 0.8889834716606371,
+            "confusion": 0.05894871249201966,
+            "diarization error rate": 0.0011605072272779663
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0005.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.09405273985412388,
+          "jer": 0.14896169508135787,
+          "wall_time_s": 6.6588449890041375,
+          "rtf": 0.11098074981673563,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9510850231234435,
+            "missed detection": 0.004019921736036981,
+            "correct": 0.8616328708644608,
+            "confusion": 0.08543223052294564,
+            "diarization error rate": 0.0016729409436877245
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0006.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.05270297894482541,
+          "jer": 0.1018039505509274,
+          "wall_time_s": 6.8597117669996805,
+          "rtf": 0.11432852944999468,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9513799260974877,
+            "missed detection": 0.0,
+            "correct": 0.9012393698838422,
+            "confusion": 0.05014055621364545,
+            "diarization error rate": 0.0009317900840654411
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0007.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0035013082845471817,
+          "jer": 0.07396666666666658,
+          "wall_time_s": 7.456515044999833,
+          "rtf": 0.12427525074999721,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9507812360173968,
+            "missed detection": 0.0033289782184597206,
+            "correct": 0.9474522577989372,
+            "confusion": 0.0,
+            "diarization error rate": 6.266547857725882e-05
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0008.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0,
+          "jer": 0.07732234053206041,
+          "wall_time_s": 7.083830568000849,
+          "rtf": 0.11806384280001415,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9477035754230256,
+            "missed detection": 0.0,
+            "correct": 0.9477035754230256,
+            "confusion": 0.0,
+            "diarization error rate": 0.0
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0009.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.004114027742381752,
+          "jer": 0.05278333333333348,
+          "wall_time_s": 7.830613924001227,
+          "rtf": 0.13051023206668713,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9606533296026859,
+            "missed detection": 0.003952154448796851,
+            "correct": 0.9567011751538891,
+            "confusion": 0.0,
+            "diarization error rate": 7.194368603773348e-05
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0010.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0,
+          "jer": 0.04689999999999988,
+          "wall_time_s": 6.548690178999095,
+          "rtf": 0.10914483631665159,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9563669366098855,
+            "missed detection": 0.0,
+            "correct": 0.9563669366098855,
+            "confusion": 0.0,
+            "diarization error rate": 0.0
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0011.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.013911421911421942,
+          "jer": 0.06920438383669376,
+          "wall_time_s": 7.327877820003778,
+          "rtf": 0.12213129700006296,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9470198675496688,
+            "missed detection": 0.001871964679911729,
+            "correct": 0.9338454746136865,
+            "confusion": 0.01130242825607064,
+            "diarization error rate": 0.00024567632514652435
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0012.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.002764959383700147,
+          "jer": 0.08046666666666671,
+          "wall_time_s": 7.500815491999674,
+          "rtf": 0.1250135915333279,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9458893979293675,
+            "missed detection": 0.0026153457667472874,
+            "correct": 0.9432740521626202,
+            "confusion": 0.0,
+            "diarization error rate": 4.9871205650953194e-05
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0013.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.04058003387874391,
+          "jer": 0.09996821094547366,
+          "wall_time_s": 7.619648444000632,
+          "rtf": 0.12699414073334386,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.95130243841972,
+            "missed detection": 0.005401002284358339,
+            "correct": 0.9126985532397159,
+            "confusion": 0.03320288289564559,
+            "diarization error rate": 0.0007185995268145406
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0014.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0012393202516196135,
+          "jer": 0.06560000000000024,
+          "wall_time_s": 7.810600583994528,
+          "rtf": 0.1301766763999088,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9466714069860457,
+            "missed detection": 0.0011732290463070396,
+            "correct": 0.9454981779397387,
+            "confusion": 0.0,
+            "diarization error rate": 2.2030401770857947e-05
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0015.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.00048168664431152817,
+          "jer": 0.05290000000000011,
+          "wall_time_s": 8.271726967002905,
+          "rtf": 0.1378621161167151,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9473471751759482,
+            "missed detection": 0.0004563244818085079,
+            "correct": 0.9468908506941397,
+            "confusion": 0.0,
+            "diarization error rate": 8.454054167673416e-06
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0016.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.03798908098271159,
+          "jer": 0.10225957425393772,
+          "wall_time_s": 6.869516812999791,
+          "rtf": 0.11449194688332985,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9419663583443447,
+            "missed detection": 0.0004642691332453011,
+            "correct": 0.9061819220742116,
+            "confusion": 0.03532016713688793,
+            "diarization error rate": 0.0006783522192548763
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0017.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.032939221093189294,
+          "jer": 0.09210304481235425,
+          "wall_time_s": 7.469535484000517,
+          "rtf": 0.12449225806667527,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9421667022563883,
+            "missed detection": 0.0018862552494839783,
+            "correct": 0.9111324649441243,
+            "confusion": 0.029147982062780246,
+            "diarization error rate": 0.0005861488556692521
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0018.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0004831636066305537,
+          "jer": 0.05981666666666664,
+          "wall_time_s": 7.167260509006155,
+          "rtf": 0.11945434181676926,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9513807856865033,
+            "missed detection": 0.0004596725716913008,
+            "correct": 0.950921113114812,
+            "confusion": 0.0,
+            "diarization error rate": 8.542194523364692e-06
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0019.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0352490709110701,
+          "jer": 0.08587934112574522,
+          "wall_time_s": 7.279254231005325,
+          "rtf": 0.12132090385008874,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9425063685253325,
+            "missed detection": 0.0,
+            "correct": 0.909283894707048,
+            "confusion": 0.03322247381828462,
+            "diarization error rate": 0.0006235683362416874
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0020.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.026074646567061512,
+          "jer": 0.09980250384950137,
+          "wall_time_s": 6.995609566001804,
+          "rtf": 0.11659349276669673,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9414656988995552,
+            "missed detection": 0.004070385245753995,
+            "correct": 0.9169173135457378,
+            "confusion": 0.02047800010806346,
+            "diarization error rate": 0.000469618834844326
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0021.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.005484322402511425,
+          "jer": 0.07721666666666684,
+          "wall_time_s": 6.434947093999654,
+          "rtf": 0.10724911823332756,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9463116074304736,
+            "missed detection": 0.005189877948387544,
+            "correct": 0.9411217294820861,
+            "confusion": 0.0,
+            "diarization error rate": 9.814815137462732e-05
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0022.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.02715820674323819,
+          "jer": 0.08333611956267366,
+          "wall_time_s": 6.924397381000745,
+          "rtf": 0.11540662301667907,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9557365439093485,
+            "missed detection": 0.0,
+            "correct": 0.9297804532577905,
+            "confusion": 0.02595609065155803,
+            "diarization error rate": 0.0004808464366720643
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0023.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.02687360917285859,
+          "jer": 0.09360616369821881,
+          "wall_time_s": 6.432322065003973,
+          "rtf": 0.10720536775006621,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9464534323349874,
+            "missed detection": 0.0033198871952307843,
+            "correct": 0.9210188126941063,
+            "confusion": 0.02211473244565023,
+            "diarization error rate": 0.00047966317732585926
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0024.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.07389819055484649,
+          "jer": 0.13392842189881285,
+          "wall_time_s": 6.699377438999363,
+          "rtf": 0.11165629064998939,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9509156463070717,
+            "missed detection": 0.0033198871952307848,
+            "correct": 0.8806447006746867,
+            "confusion": 0.06695105843715421,
+            "diarization error rate": 0.0013189981536223627
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0025.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0017830721954550856,
+          "jer": 0.0748316329932654,
+          "wall_time_s": 6.813340025000798,
+          "rtf": 0.11355566708334663,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9461574356581356,
+            "missed detection": 0.0016870670160451058,
+            "correct": 0.9444703686420906,
+            "confusion": 0.0,
+            "diarization error rate": 3.200172646999328e-05
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0026.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.03417937606693303,
+          "jer": 0.0917158263044914,
+          "wall_time_s": 7.088345919997664,
+          "rtf": 0.11813909866662774,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9509427903740835,
+            "missed detection": 0.0033180512692438046,
+            "correct": 0.9184401591237491,
+            "confusion": 0.029184579981090666,
+            "diarization error rate": 0.0006097253878540243
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0027.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.060753931994478955,
+          "jer": 0.1337553811091417,
+          "wall_time_s": 6.6981780670030275,
+          "rtf": 0.11163630111671713,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 2,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.936290660210787,
+            "missed detection": 0.0026393869341246,
+            "correct": 0.879407321113275,
+            "confusion": 0.05424395216338736,
+            "diarization error rate": 0.0011058836848477156
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0028.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.006677953348382184,
+          "jer": 0.07616666666666667,
+          "wall_time_s": 7.203143852006178,
+          "rtf": 0.1200523975334363,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9508138079055625,
+            "missed detection": 0.006349490252190965,
+            "correct": 0.9444643176533716,
+            "confusion": 0.0,
+            "diarization error rate": 0.00011944112588771568
+          }
+        },
+        {
+          "audio_path": "data/short_ru/ru_rec_0029.wav",
+          "audio_duration_s": 60.0,
+          "config_name": "baseline_ru",
+          "der": 0.0,
+          "jer": 0.04998333333333349,
+          "wall_time_s": 7.79959317400062,
+          "rtf": 0.129993219566677,
+          "n_speakers_ref": 1,
+          "n_speakers_pred": 1,
+          "error": null,
+          "der_breakdown": {
+            "false alarm": 0.0,
+            "total": 0.9518481553466056,
+            "missed detection": 0.0,
+            "correct": 0.9518481553466056,
+            "confusion": 0.0,
+            "diarization error rate": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

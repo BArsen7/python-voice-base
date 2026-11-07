@@ -8,6 +8,8 @@
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 import logging
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -34,6 +36,29 @@ class WeSpeakerEmbeddingExtractor(BaseEmbeddingExtractor):
     def _lazy_load(self):
         if self._model is not None:
             return
+
+        use_onnx = bool(self.config.get("use_onnx", False))
+        onnx_path = self.config.get("onnx_path")
+
+        if use_onnx:
+            if not onnx_path:
+                raise ValueError(
+                    "embeddings.use_onnx=true requires embeddings.onnx_path"
+                )
+            if not Path(onnx_path).exists():
+                raise FileNotFoundError(f"ONNX model not found: {onnx_path}")
+            try:
+                from pyannote.audio.pipelines.speaker_verification import (
+                    ONNXWeSpeakerPretrainedSpeakerEmbedding,
+                )
+            except ImportError as e:
+                raise ImportError(
+                    "ONNX path requires pyannote.audio >= 3.3"
+                ) from e
+            self._model = ONNXWeSpeakerPretrainedSpeakerEmbedding(onnx_path)
+            logger.info("WeSpeaker ResNet34 ONNX loaded from %s", onnx_path)
+            return
+
         try:
             from pyannote.audio.pipelines.speaker_verification import (
                 PretrainedSpeakerEmbedding,
@@ -47,7 +72,7 @@ class WeSpeakerEmbeddingExtractor(BaseEmbeddingExtractor):
         self._model = PretrainedSpeakerEmbedding(
             "hbredin/wespeaker-voxceleb-resnet34-LM"
         )
-        logger.info("WeSpeaker ResNet34 embedding model loaded")
+        logger.info("WeSpeaker ResNet34 embedding model loaded (pyannote)")
 
     def extract(
         self,

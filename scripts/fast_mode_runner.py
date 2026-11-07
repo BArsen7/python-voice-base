@@ -39,7 +39,7 @@ class SpeakerRegistry:
     Формат: L2-нормализованные векторы (IndexFlatIP = косинусное сходство).
     """
 
-    def __init__(self, dim: int = 256, threshold: float = 0.75):
+    def __init__(self, dim: int = 256, threshold: float = 0.55):
         self.dim = dim
         self.threshold = threshold
         self._index = None
@@ -115,7 +115,7 @@ class SpeakerRegistry:
         logger.info("Registry saved: %s (%d speakers)", path, len(self._names))
 
     @classmethod
-    def load(cls, path: Path, threshold: float = 0.75) -> "SpeakerRegistry":
+    def load(cls, path: Path, threshold: float = 0.55) -> "SpeakerRegistry":
         if not path.exists():
             return cls(threshold=threshold)
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -229,7 +229,7 @@ def main() -> None:
     ap.add_argument("out_json", type=Path, help="Куда сохранить транскрипт")
     ap.add_argument("--config", type=Path, default=Path("configs/final_threshold.yaml"))
     ap.add_argument("--known-speakers", type=Path, default=Path("speaker_db/known.json"))
-    ap.add_argument("--threshold", type=float, default=0.75,
+    ap.add_argument("--threshold", type=float, default=0.55,
                     help="Порог cosine-similarity для опознания известного спикера")
     ap.add_argument("--save-speakers", type=Path, default=None,
                     help="Куда сохранить обновлённый реестр (по умолчанию --known-speakers)")
@@ -252,7 +252,7 @@ def main() -> None:
     registry.save(save_path)
 
     # Краткая сводка
-    print(json.dumps(payload["_meta"], ensure_ascii=False, indent=2))
+    print(json.dumps({"transcript": payload["transcript"]}, ensure_ascii=False, indent=2))
     print(f"\nTranscript entries: {len(payload['transcript'])}")
     for e in payload["transcript"][:3]:
         print(f"  [{e['speaker_id']}] {e['start_ms']:>5}–{e['end_ms']:<5} {e['text']!r}")

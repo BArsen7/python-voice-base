@@ -241,3 +241,38 @@ python scripts/fast_mode_runner.py data/mexus_ru/ru_00.wav out.json
 
 *Последнее обновление: 2026-11-07, baseline v0.1.0*
 
+
+
+### 6. SherpaOnnxASR: subword-маркер + chunking + blob-fallback
+
+**Маркер границы слова.** sherpa-onnx конвертирует SentencePiece `▁` в
+**пробел `' '`** при формировании `result.tokens`. Оригинальный код искал
+`▁`-префикс и HF-маркер `##` — оба не работали. Было `"не д у ма ю"`,
+стало `"не думаю"`. Fix: `is_new_word = tok.startswith(" ")`.
+
+**Chunking 30s + blob-fallback.** На непрерывном 60-секундном аудио
+sherpa tail-degradation теряет маркеры и коллапсирует timestamps —
+наблюдался 669-char «блоб» в одном сегменте. Fix: `transcribe()` режет на
+30-секундные чанки; при детекте блоба (>30 chars в одном word) — fallback
+на `result.text.split()` с равномерным распределением.
+
+**merge_same_speaker_gap_ms 200→500.** 401мс пауза на границе чанка
+склеивается в одну реплику спикера.
+
+**Итог**:
+- RU: DER 2.69→**2.84** (+0.15pp, в пределах CI), RTF 0.121→**0.113**
+- EN: DER 24.01→**22.85** (−1.16pp — chunking лечит EN tail тоже), RTF 0.127→**0.124**
+- Sample `max_word_len`: 669 → **16**
+
+**Все acceptance-таргеты PASS** (запас RU ×4.2, EN ×1.09).
+
+### 7. Известные остаточные ограничения (не блокируют delivery)
+
+- **~5% слов склеиваются** (`"показалганин"`, `"иругаться"`) — sherpa
+  иногда не ставит пробел на границе. Gap-эвристика (`GAP_MS=80` в
+  `_transcribe_chunk`) опциональна.
+- **Нет пунктуации** — sherpa Zipformer её не генерирует. Для prod —
+  отдельная модель пунктуации (вне рамок направления 1).
+- **Over-clustering**: `spk_err=0.60` (RU) / `0.385` (EN). На RU
+  `data/short_ru` — 1 реальный диктор, модель находит 2 (threshold=0.92,
+  max_speakers=10). Для prod — tuning clustering threshold.

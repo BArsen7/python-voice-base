@@ -1,0 +1,32 @@
+alignment:
+  merge_same_speaker_gap_ms: 500
+  overlap_ratio_threshold: 0.5
+asr:
+  model: sherpa_onnx_zipformer
+  language: en
+  encoder: models/sherpa-onnx-zipformer-en-2023-06-26/encoder.onnx
+  decoder: models/sherpa-onnx-zipformer-en-2023-06-26/decoder.onnx
+  joiner: models/sherpa-onnx-zipformer-en-2023-06-26/joiner.onnx
+  tokens: models/sherpa-onnx-zipformer-en-2023-06-26/tokens.txt
+clustering:
+  algorithm: agglomerative
+  linkage: average
+  max_speakers: 2
+  threshold: 0.92
+embeddings:
+  embedding_dim: 256
+  hop_sec: 0.75
+  model: wespeaker_resnet34
+  window_sec: 1.5
+overlap:
+  enabled: true
+  min_overlap_duration_ms: 100
+  model: energy_heuristic
+  threshold: 0.5
+pipeline:
+  sample_rate: 16000
+vad:
+  min_speech_duration_ms: 250
+  model: silero_vad
+  speech_pad_ms: 30
+  threshold: 0.5

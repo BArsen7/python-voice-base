@@ -1,0 +1,68 @@
+{
+  "n_embeddings": 25,
+  "unique_speakers": [
+    "espeak_f3",
+    "espeak_ru",
+    "ru_real_c0",
+    "ru_real_c1",
+    "ru_real_c2",
+    "ru_real_c3",
+    "ru_real_c4",
+    "ru_real_c5",
+    "ru_real_c6",
+    "ru_real_c7",
+    "speaker_00_c0",
+    "speaker_00_c1",
+    "speaker_00_c2",
+    "speaker_00_c3"
+  ],
+  "n_same_pairs": 24,
+  "n_diff_pairs": 276,
+  "same": {
+    "mean": 0.7836953004201254,
+    "std": 0.10727811692329345,
+    "p5": 0.5642555922269821,
+    "min": 0.5555261969566345
+  },
+  "diff": {
+    "mean": 0.11629185082890309,
+    "std": 0.13903118325794153,
+    "p95": 0.3467583879828453,
+    "max": 0.5456238985061646
+  },
+  "current_threshold": 0.75,
+  "current_metrics": {
+    "threshold": 0.75,
+    "precision": 1.0,
+    "recall": 0.7083333333333334,
+    "f1": 0.8292682921975014,
+    "tp": 17,
+    "fp": 0,
+    "fn": 7,
+    "tn": 276
+  },
+  "best_under_constraints": {
+    "threshold": 0.5499999999999999,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 0.9999999995,
+    "tp": 24,
+    "fp": 0,
+    "fn": 0,
+    "tn": 276
+  },
+  "best_f1_unconstrained": {
+    "threshold": 0.5499999999999999,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 0.9999999995,
+    "tp": 24,
+    "fp": 0,
+    "fn": 0,
+    "tn": 276
+  },
+  "targets": {
+    "precision": 0.95,
+    "recall": 0.85
+  }
+}

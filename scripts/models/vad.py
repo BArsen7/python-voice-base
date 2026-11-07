@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Sequence
 
 import numpy as np
 
-from src.core.interfaces import BaseVAD, SpeechSegment
+from scripts.core.interfaces import BaseVAD, SpeechSegment
 
 logger = logging.getLogger(__name__)
 

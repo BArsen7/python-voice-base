@@ -23,3 +23,4 @@ faster-whisper>=1.0
 
 # ---- Utils ----
 tqdm>=4.66
+pytest

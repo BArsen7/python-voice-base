@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import yaml
 
-from src.core.interfaces import (
+from scripts.core.interfaces import (
     BaseASR,
     BaseClustering,
     BaseEmbeddingExtractor,
@@ -33,24 +33,24 @@ logger = logging.getLogger(__name__)
 def _build_vad(cfg: Dict[str, Any]) -> BaseVAD:
     model = cfg.get("model", "silero_vad")
     if model == "silero_vad":
-        from src.models.vad import SileroVAD
+        from scripts.models.vad import SileroVAD
         return SileroVAD(cfg)
     if model == "energy_vad":
-        from src.models.vad import EnergyVAD
+        from scripts.models.vad import EnergyVAD
         return EnergyVAD(cfg)
     raise ValueError(f"Unknown VAD model: {model}")
 
 
 def _build_overlap(cfg: Dict[str, Any]) -> BaseOverlapDetector:
     if not cfg.get("enabled", True):
-        from src.models.overlap import NullOverlapDetector
+        from scripts.models.overlap import NullOverlapDetector
         return NullOverlapDetector(cfg)
     model = cfg.get("model", "energy_heuristic")
     if model == "pyannote_segmentation":
-        from src.models.overlap import PyannoteOverlapDetector
+        from scripts.models.overlap import PyannoteOverlapDetector
         return PyannoteOverlapDetector(cfg)
     if model == "energy_heuristic":
-        from src.models.overlap import EnergyHeuristicOverlapDetector
+        from scripts.models.overlap import EnergyHeuristicOverlapDetector
         return EnergyHeuristicOverlapDetector(cfg)
     raise ValueError(f"Unknown overlap model: {model}")
 
@@ -58,10 +58,10 @@ def _build_overlap(cfg: Dict[str, Any]) -> BaseOverlapDetector:
 def _build_embeddings(cfg: Dict[str, Any]) -> BaseEmbeddingExtractor:
     model = cfg.get("model", "wespeaker_resnet34")
     if model == "wespeaker_resnet34":
-        from src.models.embeddings import WeSpeakerEmbeddingExtractor
+        from scripts.models.embeddings import WeSpeakerEmbeddingExtractor
         return WeSpeakerEmbeddingExtractor(cfg)
     if model == "ecapa_tdnn":
-        from src.models.embeddings import ECAPAEmbeddingExtractor
+        from scripts.models.embeddings import ECAPAEmbeddingExtractor
         return ECAPAEmbeddingExtractor(cfg)
     raise ValueError(f"Unknown embedding model: {model}")
 
@@ -69,10 +69,10 @@ def _build_embeddings(cfg: Dict[str, Any]) -> BaseEmbeddingExtractor:
 def _build_clustering(cfg: Dict[str, Any]) -> BaseClustering:
     algo = cfg.get("algorithm", "agglomerative")
     if algo == "agglomerative":
-        from src.models.clustering import AgglomerativeClusteringWrapper
+        from scripts.models.clustering import AgglomerativeClusteringWrapper
         return AgglomerativeClusteringWrapper(cfg)
     if algo == "spectral":
-        from src.models.clustering import SpectralClusteringWrapper
+        from scripts.models.clustering import SpectralClusteringWrapper
         return SpectralClusteringWrapper(cfg)
     raise ValueError(f"Unknown clustering algorithm: {algo}")
 
@@ -80,10 +80,10 @@ def _build_clustering(cfg: Dict[str, Any]) -> BaseClustering:
 def _build_asr(cfg: Dict[str, Any]) -> BaseASR:
     model = cfg.get("model", "faster_whisper_small")
     if model == "faster_whisper_small":
-        from src.models.asr import FasterWhisperASR
+        from scripts.models.asr import FasterWhisperASR
         return FasterWhisperASR(cfg)
     if model == "sherpa_onnx_zipformer":
-        from src.models.asr import SherpaOnnxASR
+        from scripts.models.asr import SherpaOnnxASR
         return SherpaOnnxASR(cfg)
     raise ValueError(f"Unknown ASR model: {model}")
 
@@ -164,7 +164,7 @@ class DiarizationPipeline:
         logger.info("ASR: %d words", len(words))
 
         # --- Блок 8: Alignment ---
-        from src.pipeline.alignment import align_transcript
+        from scripts.pipeline.alignment import align_transcript
 
         entries = align_transcript(
             words=words,

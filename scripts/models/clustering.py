@@ -13,7 +13,7 @@ from typing import Any, Dict
 
 import numpy as np
 
-from src.core.interfaces import BaseClustering
+from scripts.core.interfaces import BaseClustering
 
 logger = logging.getLogger(__name__)
 

@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Sequence
 
 import numpy as np
 
-from src.core.interfaces import (
+from scripts.core.interfaces import (
     BaseOverlapDetector,
     OverlapSegment,
     SpeechSegment,

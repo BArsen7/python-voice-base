@@ -27,13 +27,13 @@ import numpy as np
 import pytest
 import soundfile as sf
 
-from src.core.interfaces import (
+from scripts.core.interfaces import (
     SpeechSegment,
     TranscriptEntry,
     WordTimestamp,
 )
-from src.pipeline.alignment import align_transcript
-from src.pipeline.orchestrator import DiarizationPipeline
+from scripts.pipeline.alignment import align_transcript
+from scripts.pipeline.orchestrator import DiarizationPipeline
 
 
 # ---------------------------------------------------------------------------
@@ -184,10 +184,10 @@ def test_alignment_empty_returns_empty():
 def test_pipeline_smoke_with_light_backends(synth_wav: Path, monkeypatch):
     """Полный прогон на EnergyVAD + EnergyHeuristicOverlap + заглушках
     эмбеддингов/ASR, чтобы не тянуть torch/pyannote в CI."""
-    from src.models import asr as asr_module
-    from src.models import embeddings as emb_module
-    from src.models import vad as vad_module
-    from src.models import overlap as overlap_module
+    from scripts.models import asr as asr_module
+    from scripts.models import embeddings as emb_module
+    from scripts.models import vad as vad_module
+    from scripts.models import overlap as overlap_module
 
     class _StubEmbeddings(emb_module.WeSpeakerEmbeddingExtractor):
         def _lazy_load(self):
@@ -301,7 +301,7 @@ def test_real_audio_full_pipeline():
     Требует установленных vadonnx, pyannote.audio, faster-whisper и
     скачанных весов. Запускается только если файл существует.
     """
-    from src.pipeline.orchestrator import DiarizationPipeline, load_config
+    from scripts.pipeline.orchestrator import DiarizationPipeline, load_config
 
     cfg = load_config("config.yaml")
     pipe = DiarizationPipeline(cfg)

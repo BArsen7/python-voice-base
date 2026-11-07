@@ -26,7 +26,7 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
-from src.core.interfaces import (
+from scripts.core.interfaces import (
     OverlapSegment,
     SpeechSegment,
     TranscriptEntry,
@@ -98,6 +98,12 @@ def align_transcript(
         return []
 
     # --- Шаг 4: группировка в TranscriptEntry ---
+    # ВАЖНО: если нужна гарантированная монотонность, сортируем слова ДО
+    # группировки. Иначе out-of-order слова от ASR могут склеиться в одну
+    # реплику (см. test_alignment_monotonic_and_valid_json_shape).
+    if ensure_monotonic:
+        word_speakers.sort(key=lambda ws: (ws[0].start_ms, ws[0].end_ms))
+
     entries = _group_words(word_speakers, merge_gap_ms=merge_gap_ms)
 
     # --- Шаг 5: фильтр коротких и монотонность ---
@@ -216,6 +222,7 @@ def _group_words(
     for word, speaker in word_speakers[1:]:
         if (
             speaker == cur_speaker
+            and word.start_ms >= cur_start  # защита от out-of-order слов
             and word.start_ms - cur_end <= merge_gap_ms
         ):
             cur_end = max(cur_end, word.end_ms)

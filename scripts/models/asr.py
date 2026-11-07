@@ -16,7 +16,7 @@ from typing import Any, Dict, List
 
 import numpy as np
 
-from src.core.interfaces import BaseASR, WordTimestamp
+from scripts.core.interfaces import BaseASR, WordTimestamp
 
 logger = logging.getLogger(__name__)
 

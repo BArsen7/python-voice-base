@@ -1,2 +1,60 @@
 /__pycache__
 .venv
+
+# =========================================================================
+# Cleanup block — added by cleanup_repo.sh
+# =========================================================================
+
+# --- Archives of diagnostic runs ---
+_archive_*/
+diagnostic_reports/
+acceptance_*/
+grid_results*/
+benchmark_results*/
+ami_vad_fix_*/
+
+# --- Caches and build artifacts ---
+__pycache__/
+*.pyc
+.pytest_cache/
+pretrained_models/
+data/ami_full/_ami_cache/
+.cache/
+.venv/
+venv/
+
+# --- Backups created by patches ---
+*.bak
+*.broken.*
+*.rttm.bak
+
+# --- Old outputs ---
+transcript.json
+
+# --- Model files (large, re-downloadable) ---
+*.onnx
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+
+# --- Small test data IS committed (~20MB total) ---
+# data/mexus_ru/*.wav and data/ami_slices/*.wav are needed for
+# reproducing metrics — committed as-is. If you're replacing them
+# with larger recordings, uncomment the lines below and use git-lfs:
+#
+# data/mexus_ru/*.wav
+# data/mexus_ru/*.flac
+# data/ami_slices/*.wav
+# data/ami_full/*.wav
+
+# --- OS noise ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# --- Large data downloads (regenerable, not committed) ---
+data/ami_full/
+data/ami_full/_ami_cache/

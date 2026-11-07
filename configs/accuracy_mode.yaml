@@ -1,0 +1,53 @@
+# configs/accuracy_mode.yaml
+# Ключи соответствуют билдерам orchestrator.py:
+#   asr.model       — модель ASR
+#   vad.model       — модель VAD
+#   embeddings.model — модель эмбеддингов
+#   clustering.algorithm — алгоритм кластеризации
+
+mode: "accuracy"
+
+asr:
+  model: "sherpa_whisper_medium"
+  language: "ru"
+  encoder: "models_bundle/whisper-medium/medium-encoder.int8.onnx"
+  decoder: "models_bundle/whisper-medium/medium-decoder.int8.onnx"
+  tokens:  "models_bundle/whisper-medium/medium-tokens.txt"
+  num_threads: 4
+
+vad:
+  model: "hybrid_vad"
+  energy_threshold_db: -35.0
+  energy_min_speech_ms: 100
+  energy_min_silence_ms: 200
+  silero_threshold: 0.3
+  min_speech_duration_ms: 300
+  speech_pad_ms: 100
+  silero_window_size_samples: 512
+
+embeddings:
+  model: "wespeaker_resnet34"
+  model_path: "models_bundle/wespeaker/voxceleb_resnet34_LM.onnx"
+  window_sec: 2.5
+  hop_sec: 1.0
+  normalize: true
+
+clustering:
+  algorithm: "spectral"
+  n_neighbors: 10
+  max_speakers: 10
+  n_clusters: null
+  assign_labels: "kmeans"
+
+postprocessing:
+  speaker_smoothing:
+    method: "median"
+    window_segments: 3
+  text_normalization:
+    enabled: true
+    language: "ru"
+    fix_numbers: true
+    fix_punctuation: true
+
+output:
+  format: "json"

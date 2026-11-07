@@ -38,6 +38,9 @@ def _build_vad(cfg: Dict[str, Any]) -> BaseVAD:
     if model == "energy_vad":
         from scripts.models.vad import EnergyVAD
         return EnergyVAD(cfg)
+    if model == "hybrid_vad":
+        from scripts.models.vad import HybridVAD
+        return HybridVAD(cfg)
     raise ValueError(f"Unknown VAD model: {model}")
 
 
@@ -85,6 +88,10 @@ def _build_asr(cfg: Dict[str, Any]) -> BaseASR:
     if model == "sherpa_onnx_zipformer":
         from scripts.models.asr import SherpaOnnxASR
         return SherpaOnnxASR(cfg)
+    if model == "sherpa_whisper_medium":
+        from scripts.models.asr import SherpaOnnxWhisperMediumASR
+        return SherpaOnnxWhisperMediumASR(cfg)
+
     raise ValueError(f"Unknown ASR model: {model}")
 
 
@@ -174,6 +181,27 @@ class DiarizationPipeline:
             config=self.config.get("alignment", {}),
         )
         logger.info("Alignment: %d transcript entries", len(entries))
+
+        # --- Пост-обработка (Accuracy Mode) ---
+        if self.config.get("mode") == "accuracy":
+            from scripts.pipeline.alignment import postprocess_transcript
+            pp = self.config.get("postprocessing", {})
+            sm = pp.get("speaker_smoothing", {})
+            tn = pp.get("text_normalization", {})
+            dicts = [e.__dict__ for e in entries]
+            dicts = postprocess_transcript(
+                dicts,
+                smooth_method=sm.get("method", "median"),
+                smooth_window=int(sm.get("window_segments", 3)),
+                fix_numbers=bool(tn.get("fix_numbers", True)),
+                fix_punctuation=bool(tn.get("fix_punctuation", True)),
+            )
+            entries = [TranscriptEntry(**d) for d in dicts]
+            logger.info(
+                "Postprocess: %d entries (accuracy mode, median window=%s)",
+                len(entries), sm.get("window_segments", 3),
+            )
+
         return entries
 
 

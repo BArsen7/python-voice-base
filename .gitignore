@@ -83,3 +83,24 @@ results/fast_mode/*.stdout
 __pycache__/
 *.pyc
 .venv/
+
+# --- Accuracy Mode ---
+# Промежуточные артефакты отладки
+.accuracy_mode_backup_*
+.sherpa_v2_backup_*
+.whisper_greedy_backup_*
+
+# Артефакты тестов
+tests/out/
+tests/fixtures/*.wav
+
+# Крупные ONNX-модели (скачиваются скриптом scripts/download_accuracy_models.sh)
+models_bundle/
+*.onnx
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
